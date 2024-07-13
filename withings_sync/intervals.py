@@ -60,5 +60,5 @@ class IntervalsSync:
                 icu_wellness['BoneMass'] = item['bone_mass']
                 icu_wellness = self.client.wellness_put(icu_wellness)
                 log.info(
-                    f'Intervals.icu {start}: fat: {item['fat_ratio']:2}%, mm: {item['muscle_mass']:2}kg'
+                    f"Intervals.icu {start}: fat: {item['fat_ratio']:2}%, mm: {item['muscle_mass']:2}kg"
                 )
