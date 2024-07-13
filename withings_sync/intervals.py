@@ -40,7 +40,8 @@ class IntervalsSync:
 
     def __init__(self) -> None:
         app_config = IntervalsConfig(INTERVALS_CONFIG)
-        self.client = Intervals(app_config.config.get("athelete_id"), app_config.config.get("api_key"), strict=False)
+        self.config = app_config.config
+        self.client = Intervals(self.config.get("athlete_id"), self.config.get("api_key"), strict=False)
 
     def wellness(self, data):
         for item in data:
