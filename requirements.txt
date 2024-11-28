@@ -2,3 +2,5 @@ lxml
 requests
 garth
 setuptools
+intervalsicu
+python-dotenv
