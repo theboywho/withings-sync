@@ -19,7 +19,7 @@ from withings_sync.withings2 import WithingsAccount
 from withings_sync.garmin import GarminConnect
 from withings_sync.trainerroad import TrainerRoad
 from withings_sync.fit import FitEncoderWeight, FitEncoderBloodPressure
-
+from withings_sync.intervals import IntervalsSync
 
 def load_variable(env_var, secrets_file):
     """Load a variable from an environment variable or from a secrets file"""
@@ -150,6 +150,10 @@ def get_args():
 
     return parser.parse_args()
 
+def sync_intervals(wellness):
+    """Sync wellness data to intervals"""
+    intervals_syncer = IntervalsSync()
+    intervals_syncer.wellness(wellness)
 
 def sync_garmin(fit_file):
     """Sync generated fit file to Garmin Connect"""
@@ -265,7 +269,7 @@ def prepare_syncdata(height, groups):
         if dt not in sync_dict:
             sync_dict[dt] = {}
 
-        if group.get_weight():
+        if (group.get_weight() and group.get_fat_ratio() and group.get_muscle_mass()):
             group_data = {
                 "date_time": group.get_datetime(),
                 "height": height,
@@ -445,6 +449,10 @@ def sync():
         # get weight entries (in case of only blood_pressure)
         only_weight_entries = list(filter(lambda x: (x["type"] == "weight"), syncdata))
         last_weight_exists = len(only_weight_entries) > 0
+
+        # Upload to Intervals
+        sync_intervals(syncdata)
+
         # Upload to Trainer Road
         if ARGS.trainerroad_username and last_weight_exists:
             # sort and get last weight
@@ -508,4 +516,3 @@ def main():
         sys.exit(1)
 
     sync()
-
