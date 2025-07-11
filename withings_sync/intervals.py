@@ -54,11 +54,12 @@ class IntervalsSync:
                 icu_wellness.fields.append('Water')
                 icu_wellness.fields.append('BoneMass')
 
+                icu_wellness['weight'] = item['weight']
                 icu_wellness['bodyFat'] = item['fat_ratio']
                 icu_wellness['MuscleMass'] = item['muscle_mass']
                 icu_wellness['Water'] = item['percent_hydration']
                 icu_wellness['BoneMass'] = item['bone_mass']
                 icu_wellness = self.client.wellness_put(icu_wellness)
                 log.info(
-                    f"Intervals.icu {start}: fat: {item['fat_ratio']:2}%, mm: {item['muscle_mass']:2}kg"
+                    f"Intervals.icu {start}: weight: {item['weight']:2}kg, fat: {item['fat_ratio']:2}%, mm: {item['muscle_mass']:2}kg"
                 )
