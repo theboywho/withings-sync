@@ -3,7 +3,7 @@ import os
 from pprint import pprint
 from datetime import date
 import json
-
+import importlib_resources
 from intervalsicu import Intervals
 
 log = logging.getLogger("intervals")
