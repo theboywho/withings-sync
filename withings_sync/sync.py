@@ -175,9 +175,9 @@ def get_args():
 
     return parser.parse_args()
 
-def sync_intervals(wellness):
+def sync_intervals(wellness, config_folder=None):
     """Sync wellness data to intervals"""
-    intervals_syncer = IntervalsSync()
+    intervals_syncer = IntervalsSync(config_folder=config_folder)
     intervals_syncer.wellness(wellness)
 
 def sync_garmin(fit_file, config_folder=None):
@@ -560,7 +560,7 @@ def sync():
         last_weight_exists = len(only_weight_entries) > 0
 
         # Upload to Intervals
-        sync_intervals(syncdata)
+        sync_intervals(syncdata, config_folder)
 
         # Upload to Trainer Road
         if ARGS.trainerroad_username and last_weight_exists:

@@ -3,13 +3,12 @@ import os
 from pprint import pprint
 from datetime import date
 import json
-
 from intervalsicu import Intervals
 
 log = logging.getLogger("intervals")
 
 HOME = os.getenv('HOME', '.')
-INTERVALS_CONFIG = os.getenv('INTERVALS_CONFIG', HOME + '/.intervals.json')
+INTERVALS_CONFIG = os.path.abspath(os.path.expanduser(os.getenv('INTERVALS_CONFIG', os.path.join(HOME, "intervals.json"))))
 
 class IntervalsConfig:
     """This class takes care of the Intervals config file"""
@@ -38,8 +37,12 @@ class IntervalsConfig:
 class IntervalsSync:
     """Main Intervals class"""
 
-    def __init__(self) -> None:
-        app_config = IntervalsConfig(INTERVALS_CONFIG)
+    def __init__(self, config_folder=None) -> None:
+        if config_folder:
+            self.config_path = os.path.join(config_folder, "intervals.json")
+        else:
+            self.config_path = INTERVALS_CONFIG
+        app_config = IntervalsConfig(self.config_path)
         self.config = app_config.config
         self.client = Intervals(self.config.get("athlete_id"), self.config.get("api_key"), strict=False)
 
