@@ -9,7 +9,10 @@ from intervalsicu import Intervals
 log = logging.getLogger("intervals")
 
 HOME = os.getenv('HOME', '.')
-INTERVALS_CONFIG = os.getenv('INTERVALS_CONFIG', HOME + '/.intervals.json')
+INTERVALS_CONFIG = os.getenv(
+    'INTERVALS_CONFIG', 
+    importlib_resources.files(__name__) / "config/intervals.json"
+)
 
 class IntervalsConfig:
     """This class takes care of the Intervals config file"""

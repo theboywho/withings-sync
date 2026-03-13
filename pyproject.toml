@@ -25,6 +25,7 @@ requests = ">=2.32.3"
 lxml = ">=5.3.0"
 python-dotenv = ">=1.0.1"
 importlib-resources = ">=6.4.5"
+intervalsicu = ">=0.1.4"
 
 [tool.poetry.group.dev.dependencies]
 black = ">=24.10.0"
